@@ -17,10 +17,10 @@ public class TestaListagem {
 		ResultSet rst = stm.getResultSet();
 		while (rst.next()) {
 			Integer id = rst.getInt("ID");
-			System.out.println(id);
 			String name = rst.getString("NOME");
-			System.out.println(name);
 			String descricao = rst.getString("DESCRICAO");
+			System.out.println(id);
+			System.out.println(name);
 			System.out.println(descricao);
 		}
 		
