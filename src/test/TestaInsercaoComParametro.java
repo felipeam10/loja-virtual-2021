@@ -8,22 +8,44 @@ import java.sql.Statement;
 
 public class TestaInsercaoComParametro {
 	public static void main(String[] args) throws SQLException {
-		
-		String nome = "Mouse'";
-		String descricao = "Mouse sem fio); delete from Produto;";
-		
+
 		ConnectionFactory factory = new ConnectionFactory();
-		Connection connection = factory.conectaDatabase();
-		
-		PreparedStatement stm = connection.prepareStatement("INSERT INTO PRODUTO (nome, descricao) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+		try (Connection connection = factory.conectaDatabase()) {
+
+			connection.setAutoCommit(false);
+
+			try (PreparedStatement stm = connection.prepareStatement(
+					"INSERT INTO PRODUTO (nome, descricao) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+
+				adicionarVariavel("Smartv", "45 polegadas", stm);
+				adicionarVariavel("Radio", "mp3 player", stm);
+
+				connection.commit();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Rollback executado");
+				connection.rollback();
+			}
+		}
+
+	}
+
+	private static void adicionarVariavel(String nome, String descricao, PreparedStatement stm) throws SQLException {
 		stm.setString(1, nome);
 		stm.setString(2, descricao);
+		
+		if(nome.equals("Radio")) {
+			throw new RuntimeException("Nao foi possivel adicionar o produto");
+		}
+		
 		stm.execute();
 		
-		ResultSet rst = stm.getGeneratedKeys();
-		while (rst.next()) {
-			Integer id = rst.getInt(1); // utilizamos o int columnIndex (no sql a 1ª coluna é considerada 1)
-			System.out.println("O id criado foi: " + id);
+		try (ResultSet rst = stm.getGeneratedKeys()) {
+			while (rst.next()) {
+				Integer id = rst.getInt(1);
+				System.out.println("O id criado foi: " + id);
+			}
 		}
 	}
 }
