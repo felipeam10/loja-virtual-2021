@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import br.com.loja.virtual.jdbc.dao.ProdutoDAO;
+import br.com.loja.virtual.jdbc.factory.ConnectionFactory;
 import br.com.loja.virtual.jdbc.modelo.Produto;
 
 public class TestaInsercaoEListagemComProduto {

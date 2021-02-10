@@ -18,9 +18,10 @@ public class CategoriaDAO {
 		this.connection = connection;
 	}
 	
-	public List<Categoria> listar() throws SQLException {
+	public List<Categoria> listar() {
+		try {
 		List<Categoria> categorias = new ArrayList<>();
-		
+
 		System.out.println("Executando a query de listar categoria");
 		
 		String sql = "SELECT ID, NOME FROM CATEGORIA";
@@ -36,6 +37,9 @@ public class CategoriaDAO {
 			}
 		}
 		return categorias;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public List<Categoria> listarCategoriasComProdutos() throws SQLException {

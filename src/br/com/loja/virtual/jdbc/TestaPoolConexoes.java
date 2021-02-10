@@ -2,6 +2,8 @@ package br.com.loja.virtual.jdbc;
 
 import java.sql.SQLException;
 
+import br.com.loja.virtual.jdbc.factory.ConnectionFactory;
+
 public class TestaPoolConexoes {
 	
 	public static void main(String[] args) throws SQLException {

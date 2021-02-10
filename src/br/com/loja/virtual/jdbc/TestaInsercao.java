@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import br.com.loja.virtual.jdbc.factory.ConnectionFactory;
+
 public class TestaInsercao {
 
 	public static void main(String[] args) throws SQLException {
